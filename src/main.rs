@@ -4,7 +4,10 @@ use std::{
     path::Path,
 };
 
-use crate::{repo::get_repo, result_writer::{statement_exists_in_bashrc, add_statement_to_bashrc}};
+use crate::{
+    repo::get_repo,
+    result_writer::{add_statement_to_bashrc, statement_exists_in_bashrc},
+};
 
 mod repo;
 mod result_writer;
@@ -28,9 +31,9 @@ fn main() {
 
     println!("{}", config.repo);
 
-    let dir = format!("{}/.config/lightuconfig/sh-scripts",env!("HOME"));
+    let dir = format!("{}/.config/lightuconfig/sh-scripts", env!("HOME"));
 
-    let _repo = get_repo(&config.repo, Path::new(&dir)).expect("Couldn't clone the repo");
+    get_repo(&config.repo, Path::new(&dir)).expect("Couldn't clone the repo");
 
     let files = read_dir(&dir).unwrap_or_else(|_| panic!("Couldn't open directory '{}'", dir));
     let files = files

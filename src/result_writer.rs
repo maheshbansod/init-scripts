@@ -1,6 +1,10 @@
-use std::{fs::{read_to_string, File}, path::Path, env, io};
 use std::io::Write;
-
+use std::{
+    env,
+    fs::{read_to_string, File},
+    io,
+    path::Path,
+};
 
 pub fn statement_exists_in_bashrc(stat: &str) -> bool {
     let bashrc_path = get_bashrc_path();
@@ -13,10 +17,10 @@ pub fn statement_exists_in_bashrc(stat: &str) -> bool {
 }
 
 fn get_bashrc_path() -> String {
-format!("{}/.bashrc", env::var("HOME").unwrap())
+    format!("{}/.bashrc", env::var("HOME").unwrap())
 }
 
-pub fn add_statement_to_bashrc(stat: &str) -> io::Result<()>{
+pub fn add_statement_to_bashrc(stat: &str) -> io::Result<()> {
     let bashrc_path = get_bashrc_path();
     let bashrc_path = Path::new(&bashrc_path);
     let mut file = File::options().append(true).open(bashrc_path)?;
