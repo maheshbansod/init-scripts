@@ -61,9 +61,16 @@ fn main() {
         .filter_map(|f| f.ok())
         .map(|f| format!("source {}", f.path));
 
+    let mut added_count = 0;
+    let mut total_statements = 0;
     for statement in source_statements {
         if !statement_exists_in_bashrc(&statement) {
-            _ = add_statement_to_bashrc(&statement);
+            if let Ok(_) = add_statement_to_bashrc(&statement) {
+                added_count += 1;
+            }
         }
+        total_statements += 1;
     }
+    println!("Total {} source statements.", total_statements);
+    println!("{} new added.", added_count);
 }
